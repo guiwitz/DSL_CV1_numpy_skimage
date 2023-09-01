@@ -1,0 +1,20 @@
+name: dslskimage
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - jupyterlab
+  - scikit-image
+  - pandas
+  - microfilm
+  - matplotlib
+  - napari
+  - pyqt
+  - aicsimageio
+  - seaborn
+  - pip
+  - pip:
+      - spectral
+      - trackpy
+      - aicspylibczi>=3.0.5
+      - fsspec>=2022.7.1
