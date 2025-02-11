@@ -17,6 +17,8 @@ A series of packages is necessary to run the content of this notebook. We highly
 
 Once you have conda installed, open a terminal where you have access to conda (i.e. the beginning of the line on your terminal window should indicate ```(base)```). On MacOS or Linux, your regular terminal should work. On Windows, depending how you installed conda, you might only have access to it from a terminal called XXX Prompt where XXX stands for Anaconda, Miniforge etc.
 
+Linux: If `which conda` returns empty, you may need to load the miniforge binary with`source ~/miniforge3/etc/profile.d/conda.sh`.
+
 Then in that terminal head to the folder of the repository you downloaded previously. In the main folder you will find an [environment.yml](environment.yml) file that contains infos about all packages to install. You can simply create the necessary environment using:
 
     conda env create -f environment.yml
@@ -30,6 +32,52 @@ Finally you can start Jupyterlab using:
     jupyter lab
 
 This should automatically open a Jupyterlab session in your favorite browser. If not, copy the address appearing in the terminal starting with ```http://localhost:8888...``` in your browser.
+
+### Running Jupiterlab on a remote server
+
+Before you can access Jupiterlab remotely you must secure it properly. First install Jupyter Notebook
+
+```bash
+pip install notebook
+```
+
+Then generate a default config file
+
+```bash
+jupyter notebook --generate-config
+```
+
+Edit the config file
+
+```bash
+nano ~/.jupyter/jupyter_notebook_config.py
+```
+
+Look for, uncomment and edit the following lines
+
+```python
+c.LabServerApp.open_browser = False # You dont want to open a browser on your headless machine
+c.ServerApp.allow_origin = '*' # Allows all origin IPs. You can also specify a subnet
+c.ServerApp.ip = '*' # Lets the server process listen on all IPs of the machine
+```
+
+This will let you connect to the server via IP. If your server has a DNS record and you want to access it via hostname, you must also change this line
+
+```python
+c.ServerApp.custom_display_url = 'http://yourhostname.tld:8888'
+```
+
+Secure your instance before running it
+
+```bash
+jupyter notebook password
+```
+
+Now your headless Jupyter instance is ready to be run with
+
+```bash
+jupyter lab
+```
 
 ## Google Colab
 
